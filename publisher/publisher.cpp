@@ -27,10 +27,10 @@ NetworkInterface* network;
 AWSIoTEndpoint* ep = NULL;
 AWSIoTClient client;
 
-#define APP_INFO( x )  					printf x
+#define APP_INFO( x )                   printf x
 
-#define AWSIOT_KEEPALIVE_TIMEOUT 		(60)
-#define AWSIOT_MESSAGE 					"HELLO"
+#define AWSIOT_KEEPALIVE_TIMEOUT        (60)
+#define AWSIOT_MESSAGE                  "HELLO"
 #define AWS_IOT_SECURE_PORT             (8883)
 #define AWSIOT_TIMEOUT                  (1000)
 
@@ -115,12 +115,12 @@ int main(void)
     }
 
     APP_INFO (("Connected to the network successfully. IP address: %s\n", network->get_ip_address()));
-	
+    
     if ( ( strlen(SSL_CLIENTKEY_PEM) | strlen(SSL_CLIENTCERT_PEM) | strlen(SSL_CA_PEM) ) < 64 )
-	{
-		APP_INFO(("Please configure SSL_CLIENTKEY_PEM, SSL_CLIENTCERT_PEM and SSL_CA_PEM in aws_config.h file \n"));
-		return -1;
-	}
+    {
+        APP_INFO(("Please configure SSL_CLIENTKEY_PEM, SSL_CLIENTCERT_PEM and SSL_CA_PEM in aws_config.h file \n"));
+        return -1;
+    }
 
     /* Initialize AWS Client library */
     AWSIoTClient client(network, AWSIOT_THING_NAME, SSL_CLIENTKEY_PEM, strlen(SSL_CLIENTKEY_PEM), SSL_CLIENTCERT_PEM, strlen(SSL_CLIENTCERT_PEM));
@@ -157,17 +157,17 @@ int main(void)
 
     wait_ms(AWSIOT_TIMEOUT * 1);
 
-	while (1) {
-		publish_params.QoS = AWS_QOS_ATMOST_ONCE;
-		result = client.publish(ep, AWSIOT_TOPIC, AWSIOT_MESSAGE, strlen((char*)AWSIOT_MESSAGE),
-				publish_params);
-		if (result != CY_RSLT_SUCCESS) {
-			APP_INFO(("publish to topic failed \r\n"));
-			return 1;
-		}
+    while (1) {
+        publish_params.QoS = AWS_QOS_ATMOST_ONCE;
+        result = client.publish(ep, AWSIOT_TOPIC, AWSIOT_MESSAGE, strlen((char*)AWSIOT_MESSAGE),
+                publish_params);
+        if (result != CY_RSLT_SUCCESS) {
+            APP_INFO(("publish to topic failed \r\n"));
+            return 1;
+        }
 
-		APP_INFO(("Published to topic successfully \r\n"));
+        APP_INFO(("Published to topic successfully \r\n"));
 
-		wait_ms(AWSIOT_TIMEOUT * 5);
-	}
+        wait_ms(AWSIOT_TIMEOUT * 5);
+    }
 }

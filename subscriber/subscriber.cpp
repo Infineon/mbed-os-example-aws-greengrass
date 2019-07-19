@@ -27,12 +27,12 @@ NetworkInterface* network;
 AWSIoTEndpoint* ep = NULL;
 AWSIoTClient client;
 
-#define APP_INFO( x )  						printf x
+#define APP_INFO( x )                        printf x
 
-#define AWSIOT_KEEPALIVE_TIMEOUT 			(60)
-#define AWSIOT_MESSAGE 						"HELLO"
-#define AWS_IOT_SECURE_PORT  				(8883)
-#define AWSIOT_TIMEOUT       				(1000)
+#define AWSIOT_KEEPALIVE_TIMEOUT             (60)
+#define AWSIOT_MESSAGE                       "HELLO"
+#define AWS_IOT_SECURE_PORT                  (8883)
+#define AWSIOT_TIMEOUT                       (1000)
 
 void messageArrived(aws_iot_message_t& md)
 {
@@ -94,7 +94,7 @@ static void my_publisher_greengrass_discovery_callback( aws_greengrass_discovery
 
 int main(void)
 {
-	aws_connect_params conn_params = { 0,0,NULL,NULL,NULL,NULL,NULL };
+    aws_connect_params conn_params = { 0,0,NULL,NULL,NULL,NULL,NULL };
     cy_rslt_t result = CY_RSLT_SUCCESS;
 
     APP_INFO(("Connecting to the network using Wifi...\r\n"));
@@ -122,10 +122,10 @@ int main(void)
 
     APP_INFO(("Connected to the network successfully. IP address: %s\n", network->get_ip_address()));
     if ( ( strlen(SSL_CLIENTKEY_PEM) | strlen(SSL_CLIENTCERT_PEM) | strlen(SSL_CA_PEM) ) < 64 )
-	{
-		APP_INFO(("Please configure SSL_CLIENTKEY_PEM, SSL_CLIENTCERT_PEM and SSL_CA_PEM in aws_config.h file \n"));
-		return -1;
-	}
+    {
+        APP_INFO(("Please configure SSL_CLIENTKEY_PEM, SSL_CLIENTCERT_PEM and SSL_CA_PEM in aws_config.h file \n"));
+        return -1;
+    }
 
     /* Initialize AWS Client library */
     AWSIoTClient client(network, AWSIOT_THING_NAME, SSL_CLIENTKEY_PEM, strlen(SSL_CLIENTKEY_PEM), SSL_CLIENTCERT_PEM, strlen(SSL_CLIENTCERT_PEM));
