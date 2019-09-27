@@ -173,7 +173,22 @@ int main(void)
 
     while(1)
     {
-        client.yield(AWSIOT_TIMEOUT);
+        result = client.yield(AWSIOT_TIMEOUT);
+        if (result != CY_RSLT_SUCCESS)
+        {
+            /* Disconnected from Greengrass core */
+            if ( result == CY_RSLT_AWS_ERROR_DISCONNECTED )
+            {
+                APP_INFO(("Disconnected from MQTT broker \n"));
+                return 1;
+            }
+
+            if ( result == CY_RSLT_AWS_ERROR_BUFFER_OVERFLOW )
+            {
+                APP_INFO(("Received message is more than the MAX_MQTT_PACKET_SIZE \n"));
+                return 1;
+            }
+        }
 
         wait_ms(AWSIOT_TIMEOUT * 1);
     }
